@@ -1,3 +1,82 @@
+<script>
+export default {
+  name: 'PatternsComponent',
+  data() {
+    return {
+      isActive: true,
+      currentPatternIndex: 0,
+      patterns: [
+        {
+          title: 'Singleton Pattern',
+          description: 'Ensures a class has only one instance and provides a global point of access to it. Useful for managing shared resources like configuration managers, connection pools, or logging systems.',
+          codeSnippet: [
+            'class DatabaseConnection {',
+            '  static instance = null;',
+            '  static getInstance() {',
+            '    if (!this.instance) {',
+            '      this.instance = new DatabaseConnection();',
+            '    }',
+            '    return this.instance;',
+            '  }',
+            '}'
+          ]
+        },
+        {
+          title: 'Factory Method Pattern',
+          description: 'Defines an interface for creating an object but lets subclasses decide which class to instantiate. Provides flexibility in object creation without specifying the exact class.',
+          codeSnippet: [
+            'abstract class LoggerFactory {',
+            '  abstract createLogger(): Logger;',
+            '  logMessage(message: string) {',
+            '    const logger = this.createLogger();',
+            '    logger.log(message);',
+            '  }',
+            '}'
+          ]
+        },
+        {
+          title: 'Observer Pattern',
+          description: 'Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.',
+          codeSnippet: [
+            'class Subject {',
+            '  observers = [];',
+            '  attach(observer) {',
+            '    this.observers.push(observer);',
+            '  }',
+            '  notify() {',
+            '    this.observers.forEach(o => o.update());',
+            '  }',
+            '}'
+          ]
+        }
+      ]
+    }
+  },
+  computed: {
+    currentPattern() {
+      return this.patterns[this.currentPatternIndex];
+    }
+  },
+  methods: {
+    nextPattern() {
+      this.isActive = false;
+      setTimeout(() => {
+        this.currentPatternIndex = 
+          (this.currentPatternIndex + 1) % this.patterns.length;
+        this.isActive = true;
+      }, 500);
+    },
+    prevPattern() {
+      this.isActive = false;
+      setTimeout(() => {
+        this.currentPatternIndex = 
+          (this.currentPatternIndex - 1 + this.patterns.length) % this.patterns.length;
+        this.isActive = true;
+      }, 500);
+    }
+  }
+}
+</script>
 <template>
     <div class="design-patterns-container">
       <section 
@@ -35,87 +114,7 @@
         </div>
       </section>
     </div>
-  </template>
-    
-  <script>
-  export default {
-    name: 'PatternsComponent',
-    data() {
-      return {
-        isActive: true,
-        currentPatternIndex: 0,
-        patterns: [
-          {
-            title: 'Singleton Pattern',
-            description: 'Ensures a class has only one instance and provides a global point of access to it. Useful for managing shared resources like configuration managers, connection pools, or logging systems.',
-            codeSnippet: [
-              'class DatabaseConnection {',
-              '  static instance = null;',
-              '  static getInstance() {',
-              '    if (!this.instance) {',
-              '      this.instance = new DatabaseConnection();',
-              '    }',
-              '    return this.instance;',
-              '  }',
-              '}'
-            ]
-          },
-          {
-            title: 'Factory Method Pattern',
-            description: 'Defines an interface for creating an object but lets subclasses decide which class to instantiate. Provides flexibility in object creation without specifying the exact class.',
-            codeSnippet: [
-              'abstract class LoggerFactory {',
-              '  abstract createLogger(): Logger;',
-              '  logMessage(message: string) {',
-              '    const logger = this.createLogger();',
-              '    logger.log(message);',
-              '  }',
-              '}'
-            ]
-          },
-          {
-            title: 'Observer Pattern',
-            description: 'Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.',
-            codeSnippet: [
-              'class Subject {',
-              '  observers = [];',
-              '  attach(observer) {',
-              '    this.observers.push(observer);',
-              '  }',
-              '  notify() {',
-              '    this.observers.forEach(o => o.update());',
-              '  }',
-              '}'
-            ]
-          }
-        ]
-      }
-    },
-    computed: {
-      currentPattern() {
-        return this.patterns[this.currentPatternIndex];
-      }
-    },
-    methods: {
-      nextPattern() {
-        this.isActive = false;
-        setTimeout(() => {
-          this.currentPatternIndex = 
-            (this.currentPatternIndex + 1) % this.patterns.length;
-          this.isActive = true;
-        }, 500);
-      },
-      prevPattern() {
-        this.isActive = false;
-        setTimeout(() => {
-          this.currentPatternIndex = 
-            (this.currentPatternIndex - 1 + this.patterns.length) % this.patterns.length;
-          this.isActive = true;
-        }, 500);
-      }
-    }
-  }
-</script>
+</template>
 <style scoped>  
 
 .navigation-buttons {

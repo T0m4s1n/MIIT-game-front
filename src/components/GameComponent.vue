@@ -32,19 +32,14 @@
             height="600" 
             tabindex="-1"
           ></canvas>
-          <div id="unity-loading-bar">
+          <div id="unity-loading-bar" ref="loadingBar">
             <div id="unity-logo"></div>
             <div id="unity-progress-bar-empty">
-              <div id="unity-progress-bar-full"></div>
+              <div id="unity-progress-bar-full" ref="progressBar"></div>
             </div>
             <div class="loading-text">Loading...</div>
           </div>
-          <div id="unity-warning"></div>
-          <div id="unity-footer">
-            <div id="unity-logo-title-footer"></div>
-            <div id="unity-fullscreen-button"></div>
-            <div id="unity-build-title">Character Customizer</div>
-          </div>
+          <div id="unity-warning" ref="warningBanner"></div>
         </div>
       </div>
     </div>
@@ -58,130 +53,114 @@ export default {
     return {
       unityInstance: null,
       isGameLoaded: false,
-      isUnityLoaded: false
-    }
+      isUnityLoaded: false,
+      unityScriptLoaded: false,
+    };
   },
   mounted() {
-    // Dynamically load Unity WebGL loader script
-    this.loadUnityLoaderScript()
+    this.loadUnityLoaderScript();
   },
   methods: {
     loadUnityLoaderScript() {
-      if (document.querySelector('#unity-loader-script')) return
+      if (document.getElementById('unity-loader-script')) {
+        console.log('Unity loader script already loaded.');
+        this.unityScriptLoaded = true;
+        return;
+      }
 
-      const script = document.createElement('script')
-      script.id = 'unity-loader-script'
-      script.src = "/Build/JUEG_UNITY_WEB.loader.js"
-      script.async = true
+      const script = document.createElement('script');
+      script.id = 'unity-loader-script';
+      script.src = '../../public/Build/JUEG_UNITY_WEB.loader.js';
+      script.async = true;
+
       script.onload = () => {
-        console.log('Unity loader script loaded successfully')
-        this.isUnityLoaded = true
-      }
+        console.log('Unity loader script loaded successfully.');
+        this.unityScriptLoaded = true;
+      };
+
       script.onerror = () => {
-        console.error('Failed to load Unity loader script')
-        this.showErrorMessage('Failed to load game resources')
-      }
-      document.body.appendChild(script)
+        console.error('Failed to load Unity loader script.');
+        this.showErrorMessage('Failed to load game resources. Please check your connection or the server configuration.');
+      };
+
+      document.body.appendChild(script);
     },
     loadUnityGame() {
-      // Ensure Unity loader script is loaded first
-      if (!this.isUnityLoaded) {
-        this.showErrorMessage('Unity resources not ready. Please wait and try again.')
-        return
+      if (!this.unityScriptLoaded) {
+        this.showErrorMessage('Unity loader script not loaded. Please wait and try again.');
+        return;
       }
 
-      const canvas = this.$refs.unityCanvas
-      const buildUrl = "/Build"
-
-      // Check if createUnityInstance is available
-      if (typeof createUnityInstance !== 'function') {
-        this.showErrorMessage('Unity instance creator not found')
-        return
-      }
-
-      // Mobile device detection and viewport setup
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        const meta = document.createElement('meta')
-        meta.name = 'viewport'
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes'
-        document.getElementsByTagName('head')[0].appendChild(meta)
-        this.$refs.unityContainer.className = "unity-mobile"
-        canvas.className = "unity-mobile"
-      } else {
-        canvas.style.width = "960px"
-        canvas.style.height = "600px"
-      }
-
-      // Show loading bar
-      document.querySelector("#unity-loading-bar").style.display = "block"
-
+      const canvas = this.$refs.unityCanvas;
       const config = {
-        dataUrl: buildUrl + "/JUEG_UNITY_WEB.data.br",
-        frameworkUrl: buildUrl + "/JUEG_UNITY_WEB.framework.js.br",
-        codeUrl: buildUrl + "/JUEG_UNITY_WEB.wasm.br",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "Diego Alejandro Ocampo Madroñero",
-        productName: "Character Customizer",
-        productVersion: "1.0",
+        dataUrl: '../../public/Build/JUEG_UNITY_WEB.data.br',
+        frameworkUrl: '../../public/Build/JUEG_UNITY_WEB.framework.js.br',
+        codeUrl: '../../public/Build/JUEG_UNITY_WEB.wasm.br',
+        streamingAssetsUrl: 'StreamingAssets',
+        companyName: 'Diego Alejandro Ocampo Madroñero',
+        productName: 'Character Customizer',
+        productVersion: '1.0',
         showBanner: this.unityShowBanner,
-      }
+      };
+
+      document.querySelector('#unity-loading-bar').style.display = 'block';
 
       createUnityInstance(canvas, config, (progress) => {
-        // Update progress bar
-        document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%"
-      }).then((unityInstance) => {
-        this.unityInstance = unityInstance
-        this.isGameLoaded = true
-        document.querySelector("#unity-loading-bar").style.display = "none"
-        console.log('Unity game loaded successfully')
-      }).catch((message) => {
-        console.error('Unity instance creation failed:', message)
-        this.showErrorMessage(message)
+        this.$refs.progressBar.style.width = 100 * progress + '%';
       })
+        .then((unityInstance) => {
+          this.unityInstance = unityInstance;
+          this.isGameLoaded = true;
+          document.querySelector('#unity-loading-bar').style.display = 'none';
+          console.log('Unity game loaded successfully.');
+        })
+        .catch((error) => {
+          console.error('Unity instance creation failed:', error);
+          this.showErrorMessage('Failed to load the Unity game. Please check your resources.');
+        });
     },
     unityShowBanner(msg, type) {
-      const warningBanner = document.querySelector("#unity-warning")
-      function updateBannerVisibility() {
-        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none'
-      }
-      const div = document.createElement('div')
-      div.innerHTML = msg
-      warningBanner.appendChild(div)
-      
+      const warningBanner = this.$refs.warningBanner;
+      const div = document.createElement('div');
+      div.innerHTML = msg;
+
       if (type === 'error') {
-        div.style = 'background: red; color: white; padding: 10px;'
+        div.style = 'background: red; color: white; padding: 10px;';
       } else if (type === 'warning') {
-        div.style = 'background: yellow; color: black; padding: 10px;'
+        div.style = 'background: yellow; color: black; padding: 10px;';
         setTimeout(() => {
-          warningBanner.removeChild(div)
-          updateBannerVisibility()
-        }, 5000)
+          if (warningBanner.contains(div)) {
+            warningBanner.removeChild(div);
+          }
+        }, 5000);
       }
-      updateBannerVisibility()
+
+      warningBanner.appendChild(div);
+      warningBanner.style.display = 'block';
     },
     toggleFullscreen() {
       if (this.unityInstance) {
-        this.unityInstance.SetFullscreen(1)
+        this.unityInstance.SetFullscreen(1);
       } else {
-        this.showErrorMessage('Game not loaded. Start the game first.')
+        this.showErrorMessage('Game not loaded. Start the game first.');
       }
     },
     showErrorMessage(message) {
-      const warningBanner = document.querySelector("#unity-warning")
-      warningBanner.innerHTML = `<div style="background: red; color: white; padding: 10px;">${message}</div>`
-      warningBanner.style.display = 'block'
-    }
+      const warningBanner = this.$refs.warningBanner;
+      warningBanner.innerHTML = `<div style="background: red; color: white; padding: 10px;">${message}</div>`;
+      warningBanner.style.display = 'block';
+    },
   },
   beforeUnmount() {
     if (this.unityInstance) {
       try {
-        this.unityInstance.Quit()
+        this.unityInstance.Quit();
       } catch (error) {
-        console.error('Error quitting Unity instance:', error)
+        console.error('Error quitting Unity instance:', error);
       }
     }
-  }
-}
+  },
+};
 </script>  
 <style scoped>
   :root {
@@ -207,6 +186,7 @@ export default {
   
   .pattern-slide {
     display: flex;
+    margin-top: 5rem;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
@@ -224,7 +204,7 @@ export default {
   
   .pattern-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
     gap: 2rem;
     max-width: 1200px;
     background: #fff;
@@ -236,12 +216,20 @@ export default {
     position: relative;
     overflow: hidden;
   }
-  
+
   .pattern-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 2;
+    grid-row: 1;
+    text-align: center;
+  }
+
+  .code-showcase {
+    grid-row: 2;
+    background: #0a0a15;
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
   }
   
   .pattern-title {
@@ -317,6 +305,7 @@ export default {
   .game-controls {
     display: flex;
     gap: 1rem;
+    justify-content: center;
   }
 
   .loading-text {
