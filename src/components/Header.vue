@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { House, UserRound, Gamepad2, X, Menu, Gamepad, BringToFront} from 'lucide-vue-next';
+import { House, UserRound, Gamepad2, X, Menu, Gamepad, BringToFront, FileText} from 'lucide-vue-next';
 
 const router = useRouter();
 const route = useRoute();
@@ -105,6 +105,10 @@ const clickOutside = (e: Event) => {
         <BringToFront :size="24" color="white"/>
         <span>Patterns</span>
       </router-link>
+      <router-link to="/blog" class="nav-item" active-class="active">
+        <FileText :size="24" color="white"/>
+        <span>Documentation</span>
+      </router-link>
       <button class="play-btn" @click="goTo('/game')">
         <Gamepad2 :size="24" color="Black"/>
         <span class="play-btn-glow"></span>
@@ -124,6 +128,10 @@ const clickOutside = (e: Event) => {
           <router-link to="/patterns" class="menu-item" @click="closeMenu" active-class="active">
             <BringToFront :size="24" color="white"/>
             <span>Patterns</span>
+          </router-link>
+          <router-link to="/blog" class="menu-item" @click="closeMenu" active-class="active">
+            <FileText :size="24" color="white"/>
+            <span>Documentation</span>
           </router-link>
           <button class="play-btn mobile" @click="goTo('/game')">
             <Gamepad2 :size="24" color="Black"/>
