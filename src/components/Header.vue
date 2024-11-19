@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
       </button>
     </nav>
     <Transition name="mobile-menu">
-      <nav v-if="isMenuOpen && isMobile" class="mobile-menu" v-click-outside="clickOutside">
+      <nav v-if="isMenuOpen && isMobile" class="mobile-menu">
         <div class="menu-content">
           <router-link to="/" class="menu-item" @click="closeMenu" active-class="active">
             <House :size="24" color="white"/>
