@@ -1,14 +1,12 @@
 {
-  "name": "gamevue",
+  "name": "encrypter",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.8",
