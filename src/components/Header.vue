@@ -7,6 +7,8 @@ const router = useRouter();
 const route = useRoute();
 const isMenuOpen = ref(false);
 const isMobile = ref(false);
+const isHeaderHidden = ref(false);
+let lastScrollPosition = 0;
 
 const checkMobile = () => {
   isMobile.value = window.innerWidth <= 768;
@@ -34,6 +36,19 @@ const goTo = (path: string) => {
   closeMenu();
 };
 
+const handleScroll = () => {
+  const currentScrollPosition = window.pageYOffset;
+  
+  if (currentScrollPosition > 50 && currentScrollPosition > lastScrollPosition) {
+    isHeaderHidden.value = true;
+  } 
+  else if (currentScrollPosition < lastScrollPosition || currentScrollPosition <= 0) {
+    isHeaderHidden.value = false;
+  }
+  
+  lastScrollPosition = currentScrollPosition;
+};
+
 router.beforeEach((to, from, next) => {
   closeMenu();
   next();
@@ -42,42 +57,24 @@ router.beforeEach((to, from, next) => {
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
+  window.addEventListener('scroll', handleScroll);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkMobile);
+  window.removeEventListener('scroll', handleScroll);
   document.body.style.overflow = '';
 });
-
-interface HTMLElement {
-  clickOutsideEvent?: (event: MouseEvent) => void;
-}
-
-const vClickOutside = {
-  mounted(el: HTMLElement, binding: any) {
-    el.clickOutsideEvent = (event: MouseEvent) => {
-      if (!(el === event.target || (el as Node).contains(event.target as Node))) {
-        binding.value(event);
-      }
-    };
-    document.addEventListener('click', el.clickOutsideEvent);
-  },
-  unmounted(el: HTMLElement) {
-    if (el.clickOutsideEvent) {
-      document.removeEventListener('click', el.clickOutsideEvent);
-    }
-  }
-};
-
-const clickOutside = (e: Event) => {
-  const target = e.target as HTMLElement;
-  if (isMenuOpen.value && !(target as Element).closest('.menu-btn')) {
-    closeMenu();
-  }
-};
 </script>
+
 <template>
-  <header class="header" :class="{ 'menu-open': isMenuOpen }">
+  <header 
+    class="header" 
+    :class="{ 
+      'menu-open': isMenuOpen, 
+      'header-hidden': isHeaderHidden && !isMenuOpen 
+    }"
+  >
     <div class="logo">
       <router-link to="/" class="logo-link">
         <Gamepad :size="32" color="white"/>
@@ -111,7 +108,7 @@ const clickOutside = (e: Event) => {
         <BringToFront :size="24" color="white"/>
         <span>Patterns</span>
       </router-link>
-      <router-link to="/blog" class="nav-item" active-class="active">
+      <router-link to="/document" class="nav-item" active-class="active">
         <FileText :size="24" color="white"/>
         <span>Documentation</span>
       </router-link>
@@ -165,6 +162,14 @@ const clickOutside = (e: Event) => {
   transition: background-color 0.3s ease;
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
     'DejaVu Sans Mono', monospace;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.header.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .header.menu-open::before {

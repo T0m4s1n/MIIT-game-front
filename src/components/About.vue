@@ -1,446 +1,479 @@
-<script>
-import profileImage1 from '../assets/yo.png';
-import profileImage2 from '../assets/maka.png';
+<script setup lang="ts">
+import { ref } from 'vue'
+import { 
+  Github, 
+  Linkedin, 
+  Twitter, 
+  Code, 
+  PenTool, 
+  Database, 
+  Server,
+  Beef 
+} from 'lucide-vue-next'
 
-export default {
-  name: 'AboutComponent',
-  data() {
-    return {
-      aboutDescription: 'Passionate developers creating this application for the use of software patterns with a focus on clean, efficient code.',
-      skills: [
-        { name: 'Vue.js', level: 85 },
-        { name: 'JavaScript', level: 80 },
-        { name: 'Design', level: 75 },
-        { name: 'Backend', level: 30 }
-      ],
-      contactLinks: [
-        { name: 'GitHub', url: 'https://github.com' },
-        { name: 'LinkedIn', url: 'https://linkedin.com' },
-        { name: 'Portfolio', url: '#' }
-      ],
-      images: [profileImage1, profileImage2],
-      currentImageIndex: 0
-    }
-  },
-  mounted() {
-    this.setupScrollObserver();
-    this.animateSkillBars();
-    this.startImageRotation();
-  },
-  computed: {
-    currentImage() {
-      return this.images[this.currentImageIndex];
-    }
-  },
-  methods: {
-    setupScrollObserver() {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('active');
-              this.animateSkillBars();
-            }
-          });
-        },
-        {
-          threshold: 0.3
-        }
-      );
+interface Skill {
+  name: string
+  percentage: number
+  icon?: any
+}
 
-      if (this.$refs.aboutSlide) {
-        observer.observe(this.$refs.aboutSlide);
-      }
-    },
-    animateSkillBars() {
-      const skillBars = document.querySelectorAll('.skill-progress');
-      skillBars.forEach((bar, index) => {
-        const skillLevel = this.skills[index].level;
-        setTimeout(() => {
-          bar.style.width = `${skillLevel}%`;
-        }, 500);
-      });
-    },
-    startImageRotation() {
-      setInterval(() => {
-        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-      }, 5000);
-    }
+interface SocialLink {
+  name: string
+  url: string
+  icon?: any
+}
+
+interface CardData {
+  title: string
+  subtitle: string
+  name: string
+  profession: string
+  description: string
+  profileImage: string
+  skills: Skill[]
+  socialLinks: SocialLink[]
+}
+
+const firstCard = ref<CardData>({
+  title: 'About Maka',
+  subtitle: 'Developer of Backend',
+  name: 'Maka',
+  profession: 'Complete developer',
+  description: 'Passionate about creating innovative solutions and pushing technological boundaries very interesting man, he made the NASA, and he can make river be very happy ',
+  profileImage: new URL('../assets/maka.jpeg', import.meta.url).href,
+  skills: [
+    { name: 'Frontend', percentage: 95, icon: Code },
+    { name: 'Design', percentage: 95, icon: PenTool },
+    { name: 'Backend', percentage: 54, icon: Server },
+    { name: 'Database', percentage: 48, icon: Database }
+  ],
+  socialLinks: [
+    { name: 'GitHub', url: 'https://github.com/MAKEBUZ', icon: Github },
+    { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
+    { name: 'Steam', url: 'https://twitter.com', icon: Beef }
+  ]
+})
+
+const secondCard = ref<CardData>({
+  title: 'About T0m4s1n',
+  subtitle: 'Developer of frontend',
+  name: 'T0m4s1n',
+  profession: 'Frontend and JSON',
+  description: 't0m4s1n loves red dead redemption and plays dark souls and elden ring all the time, but it also likes to do things like idunno, pollo asado?',
+  profileImage: new URL('../assets/t0m4s1n.jpg', import.meta.url).href,
+  skills: [
+    { name: 'Frontend', percentage: 93, icon: Code },
+    { name: 'Design', percentage: 78, icon: PenTool },
+    { name: 'Backend', percentage: 25, icon: Server },
+    { name: 'Database', percentage: 45, icon: Database }
+  ],
+  socialLinks: [
+    { name: 'GitHub', url: 'https://github.com/company', icon: Github },
+    { name: 'LinkedIn', url: 'https://linkedin.com/company', icon: Linkedin },
+    { name: 'Steam', url: 'https://twitter.com/company', icon: Beef}
+  ]
+})
+
+const updateCardContent = (cardNumber: 1 | 2, newData: Partial<CardData>) => {
+  if (cardNumber === 1) {
+    firstCard.value = { ...firstCard.value, ...newData }
+  } else {
+    secondCard.value = { ...secondCard.value, ...newData }
   }
 }
-</script>
 
+const updateField = (cardNumber: 1 | 2, field: keyof CardData, value: any) => {
+  if (cardNumber === 1) {
+    firstCard.value[field] = value
+  } else {
+    secondCard.value[field] = value
+  }
+}
+
+const updateSkills = (cardNumber: 1 | 2, newSkills: Skill[]) => {
+  if (cardNumber === 1) {
+    firstCard.value.skills = newSkills
+  } else {
+    secondCard.value.skills = newSkills
+  }
+}
+
+const updateSocialLinks = (cardNumber: 1 | 2, newLinks: SocialLink[]) => {
+  if (cardNumber === 1) {
+    firstCard.value.socialLinks = newLinks
+  } else {
+    secondCard.value.socialLinks = newLinks
+  }
+}
+
+defineExpose({
+  updateCardContent,
+  updateField,
+  updateSkills,
+  updateSocialLinks,
+  firstCard,
+  secondCard
+})
+</script>
 <template>
-  <div class="about-container">
-    <main>
-      <div class="about-slide" ref="aboutSlide">
+  <div class="container">
+    <!-- First Card -->
+    <div class="about-container">
+      <div class="about-wrapper">
         <div class="about-content">
-          <div class="about__visual">
-            <div class="animated-element profile-element">
-              <div class="profile-container">
-                <div class="profile-image">
-                  <div class="profile-overlay">
-                    <img :src="currentImage" alt="Profile" />
-                  </div>
-                </div>
-                <div class="profile-details">
-                  <div class="skill-bar" v-for="(skill, index) in skills" :key="index">
-                    <div class="skill-name">{{ skill.name }}</div>
-                    <div class="skill-progress" :style="{ width: `${skill.level}%` }"></div>
+          <div class="about-text">
+            <div class="text-container">
+              <h1>{{ firstCard.title }}</h1>
+              <h2>{{ firstCard.subtitle }}</h2>
+              <p>{{ firstCard.description }}</p>
+              
+              <div class="skills-section">
+                <h3>Skills</h3>
+                <div class="skill-grid">
+                  <div 
+                    v-for="skill in firstCard.skills" 
+                    :key="skill.name" 
+                    class="skill-item"
+                  >
+                    <div class="skill-icon">
+                      <component :is="skill.icon" v-if="skill.icon" />
+                    </div>
+                    <div class="skill-details">
+                      <span class="skill-name">{{ skill.name }}</span>
+                      <div class="skill-bar">
+                        <div 
+                          class="skill-progress" 
+                          :style="{ width: `${skill.percentage}%` }"
+                        ></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div class="action-buttons">
+                <a 
+                  v-for="link in firstCard.socialLinks" 
+                  :key="link.name"
+                  :href="link.url"
+                  class="social-link"
+                  target="_blank"
+                >
+                  <component :is="link.icon" />
+                  <span>{{ link.name }}</span>
+                </a>
+              </div>
             </div>
           </div>
-          <div class="about__info">
-            <h2>About Us</h2>
-            <p>{{ aboutDescription }}</p>
-            <div class="contact-links">
-              <a 
-                v-for="(link, index) in contactLinks" 
-                :key="index" 
-                :href="link.url" 
-                target="_blank"
-                class="contact-link"
-              >
-                {{ link.name }}
-              </a>
+          
+          <div class="about-visual">
+            <div class="profile-card">
+              <div class="profile-image-wrapper">
+                <img :src="firstCard.profileImage" :alt="firstCard.title" class="profile-image" />
+              </div>
+              <div class="profile-details">
+                <h2>{{ firstCard.name }}</h2>
+                <p>{{ firstCard.profession }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
+    <div class="about-container">
+      <div class="about-wrapper">
+        <div class="about-content">
+          <div class="about-text">
+            <div class="text-container">
+              <h1>{{ secondCard.title }}</h1>
+              <h2>{{ secondCard.subtitle }}</h2>
+              <p>{{ secondCard.description }}</p>
+              
+              <div class="skills-section">
+                <h3>Skills</h3>
+                <div class="skill-grid">
+                  <div 
+                    v-for="skill in secondCard.skills" 
+                    :key="skill.name" 
+                    class="skill-item"
+                  >
+                    <div class="skill-icon">
+                      <component :is="skill.icon" v-if="skill.icon" />
+                    </div>
+                    <div class="skill-details">
+                      <span class="skill-name">{{ skill.name }}</span>
+                      <div class="skill-bar">
+                        <div 
+                          class="skill-progress" 
+                          :style="{ width: `${skill.percentage}%` }"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <a 
+                  v-for="link in secondCard.socialLinks" 
+                  :key="link.name"
+                  :href="link.url"
+                  class="social-link"
+                  target="_blank"
+                >
+                  <component :is="link.icon" />
+                  <span>{{ link.name }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="about-visual">
+            <div class="profile-card">
+              <div class="profile-image-wrapper">
+                <img :src="secondCard.profileImage" :alt="secondCard.title" class="profile-image" />
+              </div>
+              <div class="profile-details">
+                <h2>{{ secondCard.name }}</h2>
+                <p>{{ secondCard.profession }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
-  * {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  *::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .about-container {
-    margin-top: 100px;
-    min-height: 100vh;
-    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
-      'DejaVu Sans Mono', monospace;
-    background: #ffffff;
+.about-container{
+  margin-top: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  background: #fff;
+  z-index: 1001;
+}
+
+.about-wrapper {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  overflow: hidden;
+  background: #fff;
+}
+.about-content {
+    background: #fff;
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
   }
-  
-  .about-container::before {
-    --size: 45px;
-    --line: color-mix(in lch, canvasText, transparent 70%);
-    content: '';
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    background: linear-gradient(
-          90deg,
-          var(--line) 1px,
-          transparent 1px var(--size)
-        )
-        50% 50% / var(--size) var(--size),
-      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
-        var(--size) var(--size);
-    mask: linear-gradient(-20deg, transparent 50%, white);
-    top: 0;
-    transform-style: flat;
-    pointer-events: none;
-    z-index: 0;
-  }
-  
-  .about-slide {
-    margin-left: 6rem;
-    height: 100vh;
-    position: relative;
-  }
-  
+
+.about-text {
+  flex: 1;
+  padding: 3rem;
+  background: #fff;
+  background-color: #fff;
+}
+
+.text-container h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.text-container h2 {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.text-container p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.skills-section {
+  margin-bottom: 2rem;
+}
+
+.skills-section h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skill-icon {
+  background-color: #f0f0f0;
+  padding: 0.75rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-details {
+  flex-grow: 1;
+}
+
+.skill-name {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.skill-bar {
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skill-progress {
+  height: 100%;
+  background-color: #4a90e2;
+  border-radius: 4px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-3px);
+}
+
+.about-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 2rem;
+}
+
+.profile-card {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  height: 300px;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg, 
+    rgba(0,0,0,0.2) 0%, 
+    rgba(0,0,0,0.5) 100%
+  );
+}
+
+.profile-details {
+  padding: 1.5rem;
+  background-color: white;
+}
+
+.profile-details h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.profile-details p {
+  margin: 0.5rem 0 0;
+  color: #666;
+}
+
+@media (max-width: 1024px) {
   .about-content {
-    height: 100%;
-    display: flex;
-    position: relative;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-  
-  .about__visual {
-    width: 55%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: absolute;
-    right: 2rem;
-    top: 0;
-  }
-  
-  .about__info {
-    width: 45%;
-    height: 100%;
-    padding: 2rem;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .animated-element {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .active .animated-element {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .profile-container {
-    width: 100%;
-    max-width: 500px;
-    background: #2a2a2a;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-  }
-  
-  .profile-container:hover {
-    transform: scale(1.025);
-  }
-  
-  .profile-image {
-    width: 100%;
-    height: 300px;
-    background: #121212;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .profile-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      45deg, 
-      rgba(0,0,0,0.1) 0%, 
-      rgba(0,0,0,0.3) 100%
-    );
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    text-align: center;
   }
 
-  .profile-image img {
+  .about-text, .about-visual {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-    }
+    padding: 2rem;
+  }
 
-    .profile-image img.active {
-    opacity: 1;
-    }
-    
-  .skill-bar {
-    margin: 15px 0;
-    background: #333;
-    border-radius: 10px;
-    height: 30px;
-    position: relative;
-    overflow: hidden;
+  .skill-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .skill-name {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    z-index: 2;
-    font-size: 0.9rem;
+
+  .action-buttons {
+    justify-content: center;
   }
-  
-  .skill-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: #404040;
-    z-index: 1;
-    transition: width 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 1rem;
   }
-  
-  h2 {
-    text-transform: uppercase;
-    font-size: 2.5rem;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.2s;
+
+  .text-container h1 {
+    font-size: 2rem;
   }
-  
-  .active h2 {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  p {
-    margin: 1.5rem 0;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.4s;
+
+  .text-container h2 {
     font-size: 1.2rem;
-    line-height: 1.6;
-    max-width: 90%;
   }
-  
-  .active p {
-    opacity: 1;
-    transform: translateY(0);
+
+  .profile-image-wrapper {
+    height: 250px;
   }
-  
-  .contact-links {
-    display: flex;
-    gap: 1rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.6s;
-  }
-  
-  .active .contact-links {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .contact-link {
-    text-transform: uppercase;
-    font-weight: 600;
-    color: hsl(0 0% 98%);
-    background: hsl(0 0% 0%);
-    padding: 1rem 2rem;
-    text-decoration: none;
-    word-spacing: 0.2rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .contact-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg, 
-      transparent, 
-      hsla(0, 0%, 40%, 0.3), 
-      transparent
-    );
-    transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  }
-  
-  .contact-link:hover::before {
-    left: 100%;
-  }
-  
-  .contact-link:hover {
-    background: hsl(0 0% 40%);
-    transform: translateY(-3px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-  
-  @media (max-width: 1440px) {
-    .about-slide {
-      margin-left: 4rem;
-    }
-  }
-  
-  @media (max-width: 1200px) {
-    .about-slide {
-      margin-left: 2rem;
-    }
-  }
-  
-  @media (max-width: 992px) {
-    .about-content {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .about-slide {
-      margin-left: 0;
-    }
-    
-    .about__visual,
-    .about__info {
-      position: static;
-      width: 100%;
-      height: auto;
-      padding: 1rem;
-    }
-    
-    .about__visual {
-      margin-bottom: 2rem;
-    }
-    
-    .profile-container {
-      max-width: 600px;
-    }
-    
-    .profile-image {
-      height: 250px;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .profile-image {
-      height: 200px;
-    }
-    
-    h2 {
-      font-size: 2rem;
-    }
-    
-    p {
-      font-size: 1rem;
-    }
-    
-    .contact-links {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .contact-link {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-  }
-  </style>
+}
+</style>
