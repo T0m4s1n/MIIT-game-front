@@ -49,23 +49,29 @@ onBeforeUnmount(() => {
   document.body.style.overflow = '';
 });
 
+interface HTMLElement {
+  clickOutsideEvent?: (event: MouseEvent) => void;
+}
+
 const vClickOutside = {
   mounted(el: HTMLElement, binding: any) {
     el.clickOutsideEvent = (event: MouseEvent) => {
-      if (!(el === event.target || el.contains(event.target as Node))) {
+      if (!(el === event.target || (el as Node).contains(event.target as Node))) {
         binding.value(event);
       }
     };
     document.addEventListener('click', el.clickOutsideEvent);
   },
   unmounted(el: HTMLElement) {
-    document.removeEventListener('click', el.clickOutsideEvent);
+    if (el.clickOutsideEvent) {
+      document.removeEventListener('click', el.clickOutsideEvent);
+    }
   }
 };
 
 const clickOutside = (e: Event) => {
   const target = e.target as HTMLElement;
-  if (isMenuOpen.value && !target.closest('.menu-btn')) {
+  if (isMenuOpen.value && !(target as Element).closest('.menu-btn')) {
     closeMenu();
   }
 };
