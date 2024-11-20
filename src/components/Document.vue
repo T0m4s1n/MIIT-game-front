@@ -1,20 +1,21 @@
 <script>
 import { h } from 'vue'
 import * as LucideIcons from 'lucide-vue-next'
+import Vue from '../assets/vue.svg'
 
 export default {
   name: 'Document',
   data() {
     return {
-      projectName: 'MITT Game',
+      projectName: 'M.I.T.T Game',
       projectSubtitle: 'Documentation',
-      projectDescription: 'A detailed overview of the project, its purpose, key features, and technological stack. This section provides an in-depth explanation of the project\'s goals, architecture, and unique value proposition.',
+      projectDescription: 'The documentation provides detailed information about the M.I.T.T Game project, including its purpose, features, and how to use it. This documentation is intended to help developers and users understand the projects structure, components, and functionalities.',
       projectVersion: 'v1.0.0',
-      projectImage: '/path/to/project/screenshot.png',
+      projectImage: new URL('../assets/opa.png', import.meta.url).href,
       technologies: [
         { 
           name: 'Vue.js', 
-          icon: 'Vue', 
+          icon: Vue, 
           proficiency: 92.8 
         },
         { 
@@ -58,7 +59,6 @@ export default {
   },
   render() {
     return h('div', [
-      // Example of rendering technologies with icons
       h('div', { class: 'technologies' }, 
         this.technologies.map(tech => 
           h('div', { class: 'flex items-center' }, [
@@ -67,7 +67,6 @@ export default {
           ])
         )
       ),
-      // Example of rendering social links with icons
       h('div', { class: 'social-links' }, 
         this.socialLinks.map(link => 
           h('a', { href: link.url }, [
@@ -225,15 +224,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.skill-icon {
-  background-color: #f0f0f0;
-  padding: 0.75rem;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .skill-details {

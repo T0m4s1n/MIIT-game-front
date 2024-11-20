@@ -1,51 +1,3 @@
-<template>
-  <div class="pattern-slide active">
-    <div class="pattern-content">
-      <div class="pattern-info">
-        <h2 class="pattern-title">Character Customizer</h2>
-        <p class="pattern-description">
-          Explore and customize your game character with our interactive Character Customizer.
-        </p>
-        <div class="game-controls">
-          <button 
-            @click="toggleFullscreen" 
-            class="pattern-action"
-          >
-            Toggle Fullscreen
-          </button>
-          <button 
-            v-if="!isGameLoaded"
-            @click="loadUnityGame" 
-            class="pattern-action start-game"
-          >
-            Start Game
-          </button>
-        </div>
-      </div>
-      
-      <div class="code-showcase">
-        <div id="unity-container" ref="unityContainer" class="unity-desktop">
-          <canvas 
-            id="unity-canvas" 
-            ref="unityCanvas"
-            width="960" 
-            height="600" 
-            tabindex="-1"
-          ></canvas>
-          <div id="unity-loading-bar" ref="loadingBar">
-            <div id="unity-logo"></div>
-            <div id="unity-progress-bar-empty">
-              <div id="unity-progress-bar-full" ref="progressBar"></div>
-            </div>
-            <div class="loading-text">Loading...</div>
-          </div>
-          <div id="unity-warning" ref="warningBanner"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 export default {
   name: 'GameComponent',
@@ -70,7 +22,7 @@ export default {
 
       const script = document.createElement('script');
       script.id = 'unity-loader-script';
-      script.src = '../../public/Build/JUEG_UNITY_WEB.loader.js';
+      script.src = './Build/JUEG_UNITY_WEB.loader.js';
       script.async = true;
 
       script.onload = () => {
@@ -93,9 +45,9 @@ export default {
 
       const canvas = this.$refs.unityCanvas;
       const config = {
-        dataUrl: '../../public/Build/JUEG_UNITY_WEB.data.br',
-        frameworkUrl: '../../public/Build/JUEG_UNITY_WEB.framework.js.br',
-        codeUrl: '../../public/Build/JUEG_UNITY_WEB.wasm.br',
+        dataUrl: './Build/JUEG_UNITY_WEB.data.br',
+        frameworkUrl: './Build/JUEG_UNITY_WEB.framework.js.br',
+        codeUrl: './Build/JUEG_UNITY_WEB.wasm.br',
         streamingAssetsUrl: 'StreamingAssets',
         companyName: 'Diego Alejandro Ocampo Madroñero',
         productName: 'Character Customizer',
@@ -161,7 +113,54 @@ export default {
     }
   },
 };
-</script>  
+</script>
+<template>
+  <div class="pattern-slide active">
+    <div class="pattern-content">
+      <div class="pattern-info">
+        <h2 class="pattern-title">Character Customizer</h2>
+        <p class="pattern-description">
+          Explore and customize your game character with our interactive Character Customizer.
+        </p>
+        <div class="game-controls">
+          <button 
+            @click="toggleFullscreen" 
+            class="pattern-action"
+          >
+            Toggle Fullscreen
+          </button>
+          <button 
+            v-if="!isGameLoaded"
+            @click="loadUnityGame" 
+            class="pattern-action start-game"
+          >
+            Start Game
+          </button>
+        </div>
+      </div>
+      
+      <div class="code-showcase">
+        <div id="unity-container" ref="unityContainer" class="unity-desktop">
+          <canvas 
+            id="unity-canvas" 
+            ref="unityCanvas"
+            width="960" 
+            height="600" 
+            tabindex="-1"
+          ></canvas>
+          <div id="unity-loading-bar" ref="loadingBar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+              <div id="unity-progress-bar-full" ref="progressBar"></div>
+            </div>
+            <div class="loading-text">Loading...</div>
+          </div>
+          <div id="unity-warning" ref="warningBanner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 <style scoped>
   :root {
     --accent-color: #3498db;
