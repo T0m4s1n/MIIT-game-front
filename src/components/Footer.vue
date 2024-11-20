@@ -48,16 +48,16 @@ export default {
                         フレ -../MAKEBUZ/..-ン and T0m4s1n are the developers of this site, making this to port the game to web and be accesible to all public.
                     </p>
                     <div class="social-links">
-                        <a href="https://twitter" class="social-icon" aria-label="Twitter">
+                        <a href="https://x.com/home?lang=es" class="social-icon" aria-label="Twitter">
                             <Twitter size="24"/>
                         </a>
-                        <a href="https://github" class="social-icon" aria-label="Github">
+                        <a href="https://github.com/T0m4s1n/MIIT-game-front/tree/main" class="social-icon" aria-label="Github">
                             <Github size="24"/>
                         </a>
-                        <a href="https://linkedin" class="social-icon" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/feed/" class="social-icon" aria-label="LinkedIn">
                             <Linkedin size="24"/>
                         </a>
-                        <a href="https://instagram" class="social-icon" aria-label="Instagram">
+                        <a href="https://www.instagram.com" class="social-icon" aria-label="Instagram">
                             <Instagram size="24"/>
                         </a>
                     </div>

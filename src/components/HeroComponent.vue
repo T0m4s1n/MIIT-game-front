@@ -16,7 +16,7 @@ export default {
           title: 'Project made in VUE and JAVA',
           description: 'Works online :)',
           buttonText: 'Check the git',
-          link: 'https://github.com',
+          link: 'https://github.com/T0m4s1n/MIIT-game-front/tree/main',
           element: 'code'
         },
         {
