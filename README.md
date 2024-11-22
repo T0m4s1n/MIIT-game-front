@@ -16,6 +16,6 @@ take into account that you need to install dependencies in order to make the pro
 also you can check the project in the deploy https://miit-game-front.vercel.app
 this deploy doesnt show the game correctly but you can download the build from here
 
-```
-https://drive.google.com/file/d/1XtSy8Q64FHj112ez0AXDVEDpIqqlGqnL/view?usp=sharing
-```
+
+[M.I.I.T .rar](https://drive.google.com/file/d/1XtSy8Q64FHj112ez0AXDVEDpIqqlGqnL/view?usp=sharing)
+
