@@ -206,7 +206,7 @@ export default {
     grid-template-rows: auto 1fr;
     gap: 2rem;
     max-width: 1200px;
-    background: #fff;
+    background: var(--bg-secondary);
     border-radius: 20px;
     padding: 3rem;
     box-shadow: 
@@ -272,8 +272,8 @@ export default {
   
   .pattern-action {
     display: inline-block;
-    background: #333;
-    color: white;
+    background: var(--text-primary);
+    color: var(--bg-primary);
     padding: 1rem 2rem;
     text-decoration: none;
     border-radius: 10px;

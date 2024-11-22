@@ -40,11 +40,6 @@ export default {
           url: 'https://github.com/T0m4s1n/MIIT-game-front', 
           icon: 'Github' 
         },
-        { 
-          name: 'Documentation', 
-          url: 'https://docs.yourproject.com', 
-          icon: 'Book' 
-        }
       ]
     }
   },
@@ -155,9 +150,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f4f4f4;
+  background-color: transparent;
   padding: 2rem;
-  background: #fff;
   z-index: 1001;
 }
 .about-wrapper {
@@ -173,10 +167,9 @@ export default {
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.1);
   overflow: hidden;
-  background: #fff;
+  background: var(--bg-secondary);
 }
 .about-content {
-    background: #fff;
     box-shadow: 
       0 25px 50px -12px rgba(0, 0, 0, 0.25),
       0 10px 30px rgba(0, 0, 0, 0.3);
@@ -187,24 +180,23 @@ export default {
 .about-text {
   flex: 1;
   padding: 3rem;
-  background: #fff;
-  background-color: #fff;
+  background-color: var(--bg-secondary);
 }
 
 .text-container h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .text-container h2 {
   font-size: 1.5rem;
-  color: #666;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .text-container p {
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 2rem;
 }
@@ -215,7 +207,7 @@ export default {
 
 .skills-section h3 {
   font-size: 1.2rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -238,7 +230,7 @@ export default {
 .skill-name {
   display: block;
   margin-bottom: 0.5rem;
-  color: #444;
+  color: var(--text-primary);
 }
 
 .skill-bar {
@@ -264,7 +256,7 @@ export default {
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  color: #333;
+  color: var(--text-primary);
   border: 1px solid #ddd;
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -272,7 +264,6 @@ export default {
 }
 
 .social-link:hover {
-  background-color: #f0f0f0;
   transform: translateY(-3px);
 }
 
@@ -281,7 +272,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--bg-secondary);
   padding: 2rem;
 }
 
@@ -292,6 +283,7 @@ export default {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   overflow: hidden;
   text-align: center;
+  background-color: var(--bg-secondary);
 }
 
 .profile-image-wrapper {
@@ -320,18 +312,18 @@ export default {
 
 .profile-details {
   padding: 1.5rem;
-  background-color: white;
+  background-color: var(--bg-primary);
 }
 
 .profile-details h2 {
   margin: 0;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.5rem;
 }
 
 .profile-details p {
   margin: 0.5rem 0 0;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 1024px) {

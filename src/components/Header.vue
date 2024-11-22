@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { House, UserRound, Gamepad2, X, Menu, Gamepad, BringToFront, FileText} from 'lucide-vue-next';
+import { House, UserRound, Gamepad2, X, Menu, Gamepad, BringToFront, FileText, Sun, Moon } from 'lucide-vue-next';
+import { themeUtils, isDarkMode } from '../themeUtils';
 
 const router = useRouter();
 const route = useRoute();
 const isMenuOpen = ref(false);
 const isMobile = ref(false);
-const isHeaderHidden = ref(false);
+const isHeaderHidden = ref(false);  
 let lastScrollPosition = 0;
+
+const toggleTheme = () => {
+  themeUtils.toggleTheme();
+};
 
 const checkMobile = () => {
   isMobile.value = window.innerWidth <= 768;
@@ -66,7 +71,6 @@ onBeforeUnmount(() => {
   document.body.style.overflow = '';
 });
 </script>
-
 <template>
   <header 
     class="header" 
@@ -80,6 +84,17 @@ onBeforeUnmount(() => {
         <Gamepad :size="32" color="white"/>
       </router-link>
     </div>
+
+    <button 
+      class="theme-toggle-btn" 
+      @click="toggleTheme"
+      aria-label="Toggle theme"
+    >
+      <Transition mode="out-in">
+        <Moon v-if="isDarkMode" :size="24" key="sun" class="theme-icon sun"/>
+        <Sun v-else :size="24" key="moon" class="theme-icon moon"/>
+      </Transition>
+    </button>
 
     <button 
       class="menu-btn" 
@@ -360,7 +375,48 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
-/* Transitions */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  margin-left: 40rem;
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-icon {
+  color: white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.theme-icon.sun {
+  color: #9BA4B5;
+}
+
+.theme-icon.moon {
+  color: #FFD700;
+}
+
+.theme-toggle-btn .v-enter-active,
+.theme-toggle-btn .v-leave-active {
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn .v-enter-from,
+.theme-toggle-btn .v-leave-to {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.7);
+}
+
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);

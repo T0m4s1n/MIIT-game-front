@@ -31,6 +31,10 @@ export default {
   },
   mounted() {
     this.setupScrollObserver();
+    window.addEventListener('theme-changed', this.handleThemeChange);
+  },
+  beforeUnmount() {
+    window.removeEventListener('theme-changed', this.handleThemeChange);
   },
   methods: {
     setupScrollObserver() {
@@ -130,35 +134,6 @@ export default {
   display: none;
 }
 
-.hero-container {
-  min-height: 100vh;
-  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
-    'DejaVu Sans Mono', monospace;
-  background: #ffffff;
-  position: relative;
-}
-
-.hero-container::before {
-  --size: 45px;
-  --line: color-mix(in lch, canvasText, transparent 70%);
-  content: '';
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  background: linear-gradient(
-        90deg,
-        var(--line) 1px,
-        transparent 1px var(--size)
-      )
-      50% 50% / var(--size) var(--size),
-    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
-      var(--size) var(--size);
-  mask: linear-gradient(-20deg, transparent 50%, white);
-  top: 0;
-  transform-style: flat;
-  pointer-events: none;
-  z-index: 0;
-}
 
 main {
   height: 100vh;
@@ -347,7 +322,7 @@ a {
   text-transform: uppercase;
   font-weight: 600;
   color: hsl(0 0% 98%);
-  background: hsl(0 0% 0%);
+  background: #333;
   padding: 1.2rem 2.4rem;
   text-decoration: none;
   word-spacing: 0.2rem;

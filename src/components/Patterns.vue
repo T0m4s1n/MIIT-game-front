@@ -7,46 +7,96 @@ export default {
       currentPatternIndex: 0,
       patterns: [
         {
-          title: 'Singleton Pattern',
-          description: 'Ensures a class has only one instance and provides a global point of access to it. Useful for managing shared resources like configuration managers, connection pools, or logging systems.',
-          codeSnippet: [
-            'class DatabaseConnection {',
-            '  static instance = null;',
-            '  static getInstance() {',
-            '    if (!this.instance) {',
-            '      this.instance = new DatabaseConnection();',
-            '    }',
-            '    return this.instance;',
-            '  }',
-            '}'
-          ]
-        },
-        {
-          title: 'Factory Method Pattern',
-          description: 'Defines an interface for creating an object but lets subclasses decide which class to instantiate. Provides flexibility in object creation without specifying the exact class.',
-          codeSnippet: [
-            'abstract class LoggerFactory {',
-            '  abstract createLogger(): Logger;',
-            '  logMessage(message: string) {',
-            '    const logger = this.createLogger();',
-            '    logger.log(message);',
-            '  }',
-            '}'
-          ]
-        },
-        {
           title: 'Observer Pattern',
-          description: 'Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.',
+          description: 'The observer pattern is used to check if the player has collected a coin. When the player collects a coin, the coin counter is updated.',
           codeSnippet: [
-            'class Subject {',
-            '  observers = [];',
-            '  attach(observer) {',
-            '    this.observers.push(observer);',
-            '  }',
-            '  notify() {',
-            '    this.observers.forEach(o => o.update());',
-            '  }',
+            'using UnityEngine;',
+            'public class CoinCounter : MonoBehaviour{',
+            '    public delegate void CoinCollected(int coin);',
+            '    public static event CoinCollected onCoinCollected;',
+            '    [SerializeField] private int coinValue;',
+            '    private void OnTriggerEnter2D(Collider2D collision)',
+            '    {',
+            '        if (collision.CompareTag("Player"))',
+            '        {',
+            '            addCoin();',
+            '            Destroy(gameObject);',
+            '        }',
+            '    }',
+            '    public void addCoin()',
+            '    {',
+            '        onCoinCollected?.Invoke(coinValue);',
+            '    }',
             '}'
+          ]
+        },
+        {
+          title: 'Builder Pattern',
+          description: 'The builder pattern is used to create a potion object with different attributes. The builder pattern allows you to create an object step by step and produce different types of objects using the same construction code.',
+          codeSnippet: [
+          'public class PotionBuilder',
+          '{',
+              'private string name;',
+              'private string effect;',
+              'private int value;',
+              'private float duration;',
+              'public PotionBuilder SetName(string name)',
+              '{',
+                'this.name = name;',
+                'return this;',
+              '}',
+              'public PotionBuilder SetEffect(string effect)',
+              '{',
+                  'this.effect = effect;',
+                  'return this;',
+              '}',
+              'public PotionBuilder SetValue(int value)',
+              '{',
+                  'this.value = value;',
+                  'return this;',
+              '}',
+              'public PotionBuilder SetDuration(float duration)',
+              '{',
+                  'this.duration = duration;',
+                  'return this;',
+              '}',
+              'public Potion Build()',
+              '{',
+                  'return new Potion(name, effect, value, duration, GameObject.FindFirstObjectByType<Character>());',
+              '}',
+          '}',
+          '',
+          ]
+        },
+        {
+          title: 'Plugin Pattern',
+          description: 'The plugin pattern is used to create a theme plugin that allows the user to switch between light and dark mode. The plugin pattern is used to encapsulate the theme switching logic and make it reusable across different components.',
+          codeSnippet: [
+          'export const isDarkMode = ref(false)',
+          'export const themeUtils = {',
+          '  init() {',
+          '    const savedTheme = localStorage.getItem("theme")',
+          '    if (savedTheme === "dark" || ',
+          '        (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {',
+          '      this.enableDarkMode()',
+          '    } else {',
+          '      this.enableLightMode()',
+          '    }',
+          '  },',
+          '  toggleTheme() {',
+          '    isDarkMode.value = !isDarkMode.value',
+          '    if (isDarkMode.value) {',
+          '      this.enableDarkMode()',
+          '    } else {',
+          '      this.enableLightMode()',
+          '    }',
+          '  },',
+          'export const ThemePlugin = {',
+          '  install: (app) => {',
+          '    app.config.globalProperties.$theme = themeUtils',
+          '    themeUtils.init()',
+          '  }',
+          '}'
           ]
         }
       ]
@@ -165,7 +215,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     max-width: 1200px;
-    background: #fff;
+    background: var(--bg-secondary);
     border-radius: 20px;
     padding: 3rem;
     box-shadow: 
@@ -173,6 +223,7 @@ export default {
       0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
+    margin-top: 4rem;
   }
   
   .pattern-info {
@@ -246,8 +297,8 @@ export default {
   
   .pattern-action {
     display: inline-block;
-    background: #333;
-    color: white;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     padding: 1rem 2rem;
     text-decoration: none;
     border-radius: 10px;
