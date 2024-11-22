@@ -98,6 +98,30 @@ export default {
           '  }',
           '}'
           ]
+        },
+        {
+          title: 'Decorator',
+          description: 'The decorator pattern is used to add new functionality to an existing object without altering its structure. The decorator pattern is used to add new outfit options to a character in a game.',
+          codeSnippet: [
+            'using System.Collections;',
+            'using System.Collections.Generic;',
+            'using UnityEngine;',
+            'public abstract class OutfitChangerDecorator : OutfitChangerBase',
+            '    protected OutfitChangerBase _outfitChanger;',
+            '    public OutfitChangerDecorator(OutfitChangerBase outfitChanger)',
+            '    {',
+            '        _outfitChanger = outfitChanger;',
+            '    }',
+            '    public override void NextOption()',
+            '    {',
+            '        _outfitChanger.NextOption();',
+            '    }',
+            '    public override void PreviousOption()',
+            '    {',
+            '        _outfitChanger.PreviousOption();',
+            '    }',
+            '}'
+          ]
         }
       ]
     }
