@@ -1,5 +1,7 @@
 # M.I.I.T GAME
 
+MADE BY DIEGO OCAMPO AND TOMAS BENAVIDES
+
 ## To start the project you need to input the following commands in the terminal
 ```
 npm install
