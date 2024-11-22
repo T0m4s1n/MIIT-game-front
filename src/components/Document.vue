@@ -16,17 +16,17 @@ export default {
         { 
           name: 'Vue.js', 
           icon: Vue, 
-          proficiency: 94.1 
+          proficiency: 91.6 
         },
         { 
           name: 'TypeScript', 
           icon: 'Code', 
-          proficiency: 2.0 
+          proficiency: 3.3 
         },
         {
           name: 'CSS',
           icon: 'Css3',
-          proficiency: 3.5
+          proficiency: 4.7
         },
         {
           name: 'HTML',

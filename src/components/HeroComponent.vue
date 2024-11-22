@@ -23,7 +23,7 @@ export default {
           title: 'Patterns of software',
           description: 'The patterns of software are included in the game, but you can check the code for this documentation',
           buttonText: 'Document',
-          link: '/documentation',
+          link: '/document',
           element: 'codetwo'
         }
       ]

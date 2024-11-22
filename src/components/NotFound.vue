@@ -74,7 +74,7 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: transparent;
   padding: 1rem;
 }
 
@@ -83,7 +83,7 @@ export default {
   max-width: 600px;
 }
 .error-card {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   border-radius: 20px;
   padding: 2rem;
   text-align: center;
@@ -91,7 +91,7 @@ export default {
 }
 
 .error-card {
-    background: #fff;
+    background: var(--bg-secondary);
     box-shadow: 
       0 25px 50px -12px rgba(0, 0, 0, 0.25),
       0 10px 30px rgba(0, 0, 0, 0.3);
@@ -119,12 +119,12 @@ export default {
 
 .error-subtitle {
   font-size: 1.5rem;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .error-message {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
 }
 
@@ -136,6 +136,8 @@ export default {
 }
 
 .action-button {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +183,7 @@ export default {
 
 .home-button {
   text-decoration: none;
-  color: black;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,11 +198,6 @@ export default {
   border: none;
   cursor: pointer;
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-}
-
-
-.home-button:hover {
-  background: color-mix(in srgb, var(--accent-color) 80%, white);
 }
 
 .search-button {

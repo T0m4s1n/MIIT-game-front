@@ -50,7 +50,7 @@ const firstCard = ref<CardData>({
   socialLinks: [
     { name: 'GitHub', url: 'https://github.com/MAKEBUZ', icon: Github },
     { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
-    { name: 'Steam', url: 'https://twitter.com', icon: Beef }
+    { name: 'Steam', url: 'https://steamcommunity.com/profiles/76561198385975559/', icon: Beef }
   ]
 })
 
@@ -68,9 +68,9 @@ const secondCard = ref<CardData>({
     { name: 'Database', percentage: 45, icon: Database }
   ],
   socialLinks: [
-    { name: 'GitHub', url: 'https://github.com/company', icon: Github },
-    { name: 'LinkedIn', url: 'https://linkedin.com/company', icon: Linkedin },
-    { name: 'Steam', url: 'https://twitter.com/company', icon: Beef}
+    { name: 'GitHub', url: 'https://github.com/T0m4s1n', icon: Github },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/tomas-benavides-calderon-97a196333/', icon: Linkedin },
+    { name: 'Steam', url: 'https://steamcommunity.com/profiles/76561199201904773/', icon: Beef}
   ]
 })
 
@@ -117,7 +117,6 @@ defineExpose({
 </script>
 <template>
   <div class="container">
-    <!-- First Card -->
     <div class="about-container">
       <div class="about-wrapper">
         <div class="about-content">
