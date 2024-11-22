@@ -74,15 +74,15 @@ export default {
                         </li>
                         <li class="footer-item">
                             <User size="20"/>
-                            <a href="#">About</a>
+                            <a href="/about">About</a>
                         </li>
                         <li class="footer-item">
                             <Settings size="20"/>
-                            <a href="#">Avena?</a>
+                            <a href="/game">Avena?</a>
                         </li>
                         <li class="footer-item">
                             <Contact size="20"/>
-                            <a href="#">Contact</a>
+                            <a href="/404">Contact</a>
                         </li>
                     </ul>
                 </div>

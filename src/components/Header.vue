@@ -386,7 +386,7 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   margin-left: 1rem;
-  margin-left: 40rem;
+  margin-left: 30rem;
 }
 
 .theme-toggle-btn:hover {
