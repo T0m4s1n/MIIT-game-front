@@ -82,7 +82,7 @@ export default {
                         </li>
                         <li class="footer-item">
                             <Contact size="20"/>
-                            <a href="/404">Contact</a>
+                            <a href="/game">Contact</a>
                         </li>
                     </ul>
                 </div>

@@ -5,6 +5,7 @@ import AboutView from '../views/AboutView.vue'
 import GameView from '../views/GameView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import Document from '../components/Document.vue'
+import ImportantView from '../views/ImportantView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/document',
       name: 'document',
       component: Document,
+    },
+    {
+      path: '/important',
+      name: 'important',
+      component: ImportantView,
     }
   ],
 })

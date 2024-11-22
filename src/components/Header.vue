@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
         <FileText :size="24" color="white"/>
         <span>Documentation</span>
       </router-link>
-      <button class="play-btn" @click="goTo('/game')">
+      <button class="play-btn" @click="goTo('/important')">
         <Gamepad2 :size="24" color="Black"/>
         <span class="play-btn-glow"></span>
       </button>

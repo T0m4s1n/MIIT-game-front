@@ -264,7 +264,7 @@ export default {
   }
   
   .code-showcase {
-    background: #0a0a15;
+    background: #333;
     border-radius: 12px;
     padding: 2rem;
     position: relative;
