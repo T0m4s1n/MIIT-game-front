@@ -97,7 +97,7 @@ export default {
                 <div class="code-line">And T0m4s1n are the papus</div>
                 <div class="code-line">that created the code for this</div>
                 <div class="code-line">game that works wow</div>
-                <div class="code-line">with JAVA and VUE Framework</div>
+                <div class="code-line">with UNITY and VUE Framework</div>
               </div>
             </div>
             <div v-if="item.element === 'codetwo'" class="animated-element code-element">
@@ -105,8 +105,8 @@ export default {
                 <div class="code-line">The game is made with the patterns of</div>
                 <div class="code-line">software and being specially</div>
                 <div class="code-line">selected for the application :3</div>
-                <div class="code-line">game that works wow</div>
-                <div class="code-line">with JAVA and VUE Framework</div>
+                <div class="code-line">patterns like builder</div>
+                <div class="code-line">observer and plugin</div>
               </div>
             </div>
           </div>
