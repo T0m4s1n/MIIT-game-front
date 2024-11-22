@@ -42,8 +42,8 @@ const firstCard = ref<CardData>({
   description: 'Passionate about creating innovative solutions and pushing technological boundaries very interesting man, he made the NASA, and he can make river be very happy ',
   profileImage: new URL('../assets/maka.jpeg', import.meta.url).href,
   skills: [
-    { name: 'Frontend', percentage: 95, icon: Code },
-    { name: 'Design', percentage: 95, icon: PenTool },
+    { name: 'Frontend', percentage: 82, icon: Code },
+    { name: 'Design', percentage: 86, icon: PenTool },
     { name: 'Backend', percentage: 54, icon: Server },
     { name: 'Database', percentage: 48, icon: Database }
   ],
